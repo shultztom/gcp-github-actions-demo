@@ -59,12 +59,13 @@ jobs:
           --port=8080 \
           --allow-unauthenticated
     
-    - uses: actions/github-script@v6
-        with:
-          script: |
-            github.rest.git.createRef({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              ref: "refs/tags/v${{ steps.package-version.outputs.current-version}}",
-              sha: context.sha
-            })
+    - name: Create tag
+      uses: actions/github-script@v6
+      with:
+        script: |
+          github.rest.git.createRef({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            ref: "refs/tags/v${{ steps.package-version.outputs.current-version}}",
+            sha: context.sha
+          })
